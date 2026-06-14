@@ -121,22 +121,8 @@ Sends alerts when a project you follow opens for applications — currently over
 A typical flow: onboard in four steps (account → district → background → story), see urgent projects in your district, tap one that's three days from its comment deadline, generate a personal email addressed to your supervisor in the tone you choose, and open it directly in your mail app — pre-filled, ready to send.
 
 How We Built It
-Architecture
 
-sf-housing-advocate/
-├── backend/
-│   └── src/
-│       ├── db/          # SQLite schema + seed data (6 real SF pipeline projects)
-│       ├── routes/      # auth, projects, resources, advocacy, bills
-│       ├── services/    # scraper, claude, twilio, legislation, enrichment
-│       └── index.js     # Express app + cron jobs
-└── frontend/
-    └── app/
-        ├── (auth)/      # Welcome → 4-step onboarding → login
-        ├── (tabs)/      # Dashboard, Projects, Resources, Alerts, Profile
-        ├── bill/        # Bill detail screen + AI advocacy panel
-        └── project/     # Project detail screen + AI advocacy panel
-The backend is a single Express server with a SQLite database (the native node:sqlite module introduced in Node 22). Five cron jobs run in-process:
+Architecture: The backend is a single Express server with a SQLite database (the native node:sqlite module introduced in Node 22). Five cron jobs run in-process:
 
 Every 6 hours: scrape SF Planning Commission (Legistar) + DAHLIA, then run enrichment
 Nightly at 2 AM: pull legislation from Congress.gov and OpenStates, run enrichment, stamp last_updated
